@@ -1,0 +1,4 @@
+This Learning Tracker is a simple, single-page web application built entirely in one `index.html` file. It displays a list of DevOps and GitHub topics, each with a checkbox that you can 
+tick when you complete the topic. As you mark tasks complete, a progress bar at the bottom automatically fills, showing your overall learning progress in percentage. The HTML structures
+the page and tasks, CSS styles it with a clean and modern look including shadows, rounded corners, and hover effects, and JavaScript makes it interactive by updating the progress bar whenever
+a checkbox is clicked. The app runs entirely in the browser, requires no server or additional files, and provides immediate visual feedback to help track your learning efficiently.
