@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Collab To-Do — GitHub Style</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0b1220;
+    --muted:#9aa6b2;
+    --accent:#2dd4bf;
+    --accent-2:#60a5fa;
+    --danger:#fb7185;
+    --glass: rgba(255,255,255,0.03);
+    --glass-2: rgba(255,255,255,0.02);
+    font-family: "Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background: linear-gradient(180deg,#071025 0%, #071629 60%);
+    min-height:100vh;
+    color:#e6eef6;
+    padding:28px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .app {
+    max-width:1000px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: 320px 1fr;
+    gap:20px;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: linear-gradient(180deg,var(--card), rgba(7,22,41,0.7));
+    padding:18px;
+    border-radius:14px;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+    position:relative;
+    overflow:hidden;
+  }
+  .brand {
+    display:flex; gap:12px; align-items:center; margin-bottom:12px;
+  }
+  .logo {
+    width:44px; height:44px; border-radius:10px;
+    background: linear-gradient(135deg,var(--accent), var(--accent-2));
+    display:grid; place-items:center; font-weight:700; color:#031022;
+    box-shadow:0 6px 18px rgba(45,212,191,0.12);
+  }
+  .brand h1{font-size:16px; margin:0}
+  .brand p{margin:0; color:var(--muted); font-size:12px}
+
+  .counts { display:flex; gap:8px; margin:12px 0 18px; }
+  .chip {
+    background:var(--glass); padding:8px 10px; border-radius:999px;
+    font-size:13px; display:inline-flex; gap:8px; align-items:center; color:var(--muted);
+  }
+  .filters { margin-top:6px; display:flex; flex-direction:column; gap:8px; }
+  .filter-btn {
+    background:transparent; border:1px solid transparent; color:var(--muted);
+    padding:8px 10px; border-radius:8px; text-align:left; cursor:pointer; font-size:14px;
+  }
+  .filter-btn.active { background:linear-gradient(90deg, rgba(96,165,250,0.08), rgba(45,212,191,0.06)); color:var(--accent-2); border:1px solid rgba(96,165,250,0.06); }
+
+  /* Main column */
+  .main {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:18px; border-radius:14px; box-shadow: 0 8px 30px rgba(2,6,23,0.55);
+  }
+  .top {
+    display:flex; gap:12px; align-items:center; justify-content:space-between;
+  }
+  .title { font-size:18px; margin:0; display:flex; gap:10px; align-items:center; }
+  .controls { display:flex; gap:8px; align-items:center; }
+
+  .new-task {
+    display:flex; gap:8px; margin-top:14px;
+  }
+  input[type="text"], select {
+    background:var(--glass); border:1px solid transparent; padding:10px 12px; border-radius:10px; color:inherit; font-size:14px;
+    outline:none; width:100%;
+  }
+  button {
+    background:linear-gradient(90deg,var(--accent),var(--accent-2)); border:0; padding:10px 12px; color:#021124; border-radius:10px; cursor:pointer; font-weight:600;
+  }
+  .actions { display:flex; gap:8px; }
+
+  .search {
+    background:var(--glass-2); padding:8px 10px; border-radius:10px; display:flex; gap:8px; align-items:center; color:var(--muted);
+  }
+  .search input { background:transparent; border:0; color:inherit; outline:none; width:220px; font-size:13px; }
+
+  .list { margin-top:18px; display:flex; flex-direction:column; gap:12px; }
+  .task {
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+    border-radius:10px; padding:12px; display:flex; gap:12px; align-items:flex-start; border:1px solid rgba(255,255,255,0.02);
+  }
+  .task .left { width:36px; display:grid; place-items:center; }
+  .checkbox {
+    width:20px; height:20px; border-radius:6px; border:2px solid rgba(255,255,255,0.06); display:grid; place-items:center; cursor:pointer;
+  }
+  .checkbox.done {
+    background:linear-gradient(90deg,var(--accent),var(--accent-2)); border:0; color:#021124;
+  }
+  .task .content { flex:1; }
+  .task h3 { margin:0; font-size:15px; display:flex; gap:8px; align-items:center; }
+  .task p { margin:6px 0 0; color:var(--muted); font-size:13px; }
+  .meta { display:flex; gap:8px; margin-top:8px; align-items:center; flex-wrap:wrap; }
+  .tag {
+    padding:6px 8px; border-radius:999px; background:rgba(255,255,255,0.02); font-size:12px; colo
